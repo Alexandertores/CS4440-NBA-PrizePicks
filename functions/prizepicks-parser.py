@@ -20,14 +20,37 @@ import json
 # data = response.json()
 # print(data)
 
-file = open('temp-projections/projections2-23.json')
+file = open('temp-projections/projections2-25.json', encoding="utf-8")
 data = json.load(file)
 
-#This is me trying to parse through the data. still in progress.
+#This is me trying to parse through the data.
+predictions = []
+stats = {'Rebounds', "Points", "Assists"}
+num=0
 for entry in data['data']:
-    if entry['type'] != "projection":
+    try:
+
+        if entry['type'] != "projection":
+            continue
+        attributes = entry['attributes']
+        if attributes['projection_type'] != 'Single Stat':
+            continue
+        if attributes['stat_type'] not in stats:
+            continue 
+        if entry['relationships']['league']['data']['id'] != "7":
+            continue
+
+        values = []
+        values.append(str(attributes['line_score']))
+        values.append(str(attributes['stat_type']))
+        #print(entry['relationships']['new_player']['data']['id'])
+        player = next(item for item in data['included'] if (item["type"] == "new_player" and item['id'] == entry['relationships']['new_player']['data']['id']))
+        values.append(player['attributes']['name'])
+        predictions.append(values)
+        #print(" ".join(string))
+        num +=1
+    except:
         continue
-    attributes = entry['attributes']
-    if attributes['projection_type'] != 'Single Stat':
-        continue
-    if attributes['stat_type'] != 'Rebounds' & attributes['state_type'] != 'Points' & attributes['state_type'] != 'Assists' 
+
+print(num)
+print(predictions)
