@@ -16,7 +16,7 @@ import pprint
 # data = response.json()
 # print(data)
 
-file = open('temp-projections/projections2-28.json', encoding="utf-8")
+file = open('../temp-projections/projections2-24.json', encoding="utf-8")
 data = json.load(file)
 
 #This is me trying to parse through the data.
@@ -50,19 +50,19 @@ for entry in data['data']:
         if values[1] == "Points":
             point_predictions.append({
                 "data": {"name": values[2]},
-                "date":datetime.datetime(2023, 2, 28, 0, 0),
+                "date":datetime.datetime(2023, 2, 24, 0, 0),
                 "line":values[0]
             })
         if values[1] == "Rebounds":
             rebound_predictions.append({
                 "data": {"name": values[2]},
-                "date":datetime.datetime(2023, 2, 28, 0, 0),
+                "date":datetime.datetime(2023, 2, 24, 0, 0),
                 "line":values[0]
             })
         if values[1] == "Assists":
             assist_predictions.append({
                 "data": {"name": values[2]},
-                "date":datetime.datetime(2023, 2, 28, 0, 0),
+                "date":datetime.datetime(2023, 2, 24, 0, 0),
                 "line":values[0]
             })    
         
