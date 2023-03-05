@@ -16,7 +16,7 @@ import pprint
 # data = response.json()
 # print(data)
 
-file = open('../temp-projections/projections2-24.json', encoding="utf-8")
+file = open('temp-projections/projections2-28.json', encoding="utf-8")
 data = json.load(file)
 
 #This is me trying to parse through the data.
@@ -26,6 +26,7 @@ num=0
 point_predictions = []
 rebound_predictions = []
 assist_predictions = []
+players = []
 for entry in data['data']:
     try:
         if entry['type'] != "projection":
@@ -44,6 +45,7 @@ for entry in data['data']:
         #print(entry['relationships']['new_player']['data']['id'])
         player = next(item for item in data['included'] if (item["type"] == "new_player" and item['id'] == entry['relationships']['new_player']['data']['id']))
         values.append(player['attributes']['name'])
+        values.append(player['attributes']['image_url'])
         #print(values)
 
         #For presaved projections
@@ -66,12 +68,15 @@ for entry in data['data']:
                 "line":values[0]
             })    
         
+        if {"name": values[2], "image": values[3]} not in players:
+            players.append({"name": values[2], "image": values[3]})
 
         num +=1
     except:
         continue
 
 print(num)
+# print(players)
 #print(predictions)
 
 
@@ -89,13 +94,24 @@ try:
 except Exception:
     print("oops something went wrong in the connection")
 
-collection = db.points
-# pprint.pprint(collection.find_one())
-collection.insert_many(point_predictions)
-collection = db.assists
-collection.insert_many(assist_predictions)
-collection = db.rebounds
-collection.insert_many(rebound_predictions)
+# collection = db.points
+# # pprint.pprint(collection.find_one())
+# collection.insert_many(point_predictions)
+# collection = db.assists
+# collection.insert_many(assist_predictions)
+# collection = db.rebounds
+# collection.insert_many(rebound_predictions)
+
+inserted = 0
+collection = db.players
+for player in players:
+    if not collection.find_one({"name": player['name']}):
+        collection.insert_one(player)
+        inserted +=1
+print(inserted)
+
+
+client.close()
 
 
 
