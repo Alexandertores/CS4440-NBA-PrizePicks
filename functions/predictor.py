@@ -2,11 +2,19 @@ from nba_api.stats.endpoints import playergamelog
 from nba_api.stats.static import players
 import pymongo
 import numpy as np
-from math import sqrt
+import scipy.stats as st
 
+#Predictor Parameters
 player_name = "Spencer Dinwiddie"
 stat_type = "PTS" #PTS, AST, or REB
 max_games = 5
+
+#Function for calculating probability
+def get_over_probability(player_stats: np.ndarray, projections: np.ndarray):
+    differences = player_stats - projections
+    print(differences)
+    z_score = (0 - np.mean(differences)) / np.std(differences)
+    return st.norm.cdf(z_score)
 
 # Connection to MongoDB
 conn_str = "mongodb+srv://vincent:nbaprizepicks@cs4440.s5kkhzs.mongodb.net/test"
@@ -41,6 +49,7 @@ for doc in collection.find(query).sort('date', -1):
     if len(projections) >= max_games:
         break
 client.close()
+
 if len(projections) == 0:
     print("Sorry, no prizepicks projects for this player yet. Try a different player")
     exit()
@@ -56,8 +65,6 @@ if len(player_list) > 0:
     player_stats = stats.loc[0:len(projections)-1, stat_type].to_numpy()
     print(player_stats)
 
-#Run analysis
-differences = player_stats - projections
-z_score = (19.5 - np.mean(differences))
-print(differences)
-print(z_score)
+#Calculate the probability for hitting the over
+probability = get_over_probability(player_stats, projections)
+print('Probability of hitting the over: ', probability)
