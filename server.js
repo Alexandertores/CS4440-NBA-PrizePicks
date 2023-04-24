@@ -12,12 +12,15 @@ app.use(express.json());
 const client = new MongoClient(uri);
 client.connect();
 const dbName = "prizepicks";
+const calcDb = "calculations"
 const pointsCollection = "points";
 const reboundsCollection = "rebounds";
 const assistsCollection = "assists";
 const playersCollection = "players"
 const database = client.db(dbName);
-const date = "2023-02-23";
+const calcDatabase = client.db(calcDb);
+const startDate = "2023-03-23";
+const endDate = "2023-03-24";
 
 playerMap = {};
 try {
@@ -35,16 +38,34 @@ try {
     console.error(`Something went wrong trying to find one document: ${err}\n`);
 }
 
+calcMap = {};
+try {
+    calcDatabase.collection(pointsCollection).find({date: { $gte: new Date(startDate), $lt: new Date(endDate)}}).toArray().then(
+        (items) => {
+            items.forEach(item => {
+                calcMap[item.data.name] = item.probability;
+            });
+        },
+        (err) => {
+            return err
+        }
+    )
+} catch (err) {
+    console.error(`Something went wrong trying to find one document: ${err}\n`);
+}
+
+
 
 
 
 app.get('/', (req, res) => {
     try {
-        database.collection(pointsCollection).find({date: new Date(date)}).toArray().then(
+        database.collection(pointsCollection).find({date: { $gte: new Date(startDate), $lt: new Date(endDate)}}).toArray().then(
             (items) => {
                 for (let i = 0; i < items.length; i++) {
                     if (items[i].data.name in playerMap) {
                         items[i].image = playerMap[items[i].data.name]
+                        items[i].probability = calcMap[items[i].data.name]
                     };
                 }
                 res.send(items);

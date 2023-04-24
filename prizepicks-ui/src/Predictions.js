@@ -25,7 +25,9 @@ function Predictions() {
   return (
     <div>
       {lines.map((line, index) => {
-        return <PlayerCard data={line} />
+        if (line.probability != null) {
+          return <PlayerCard data={line} />
+        }
       })}
     </div>
 

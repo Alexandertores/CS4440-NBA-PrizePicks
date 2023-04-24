@@ -14,7 +14,7 @@ function PlayerCard(props) {
             <div class="card-body">
               <h5 class="card-title">{props.data.data.name}</h5>
               <p class="card-text">Line: {props.data.line}</p>
-              <p class="card-text">Prediction: {props.data.line}</p>
+              <p class="card-text">Prediction: {props.data.probability}</p>
             </div>
           </div>
         </div>
