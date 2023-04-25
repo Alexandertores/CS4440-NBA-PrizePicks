@@ -13,9 +13,6 @@ const client = new MongoClient(uri);
 client.connect();
 const dbName = "prizepicks";
 const calcDb = "calculations"
-const pointsCollection = "points";
-const reboundsCollection = "rebounds";
-const assistsCollection = "assists";
 const playersCollection = "players"
 const database = client.db(dbName);
 const calcDatabase = client.db(calcDb);
@@ -38,29 +35,22 @@ try {
     console.error(`Something went wrong trying to find one document: ${err}\n`);
 }
 
-calcMap = {};
-try {
-    calcDatabase.collection(pointsCollection).find({date: { $gte: new Date(startDate), $lt: new Date(endDate)}}).toArray().then(
-        (items) => {
-            items.forEach(item => {
-                calcMap[item.data.name] = item.probability;
-            });
-        },
-        (err) => {
-            return err
-        }
-    )
-} catch (err) {
-    console.error(`Something went wrong trying to find one document: ${err}\n`);
-}
-
-
-
-
 
 app.get('/', (req, res) => {
     try {
-        database.collection(pointsCollection).find({date: { $gte: new Date(startDate), $lt: new Date(endDate)}}).toArray().then(
+        calcMap = {}
+        calcDatabase.collection(req.query.stat).find({date: { $gte: new Date(startDate), $lt: new Date(endDate)}}).toArray().then(
+            (items) => {
+                items.forEach(item => {
+                    calcMap[item.data.name] = item.probability;
+                });
+            },
+            (err) => {
+                return err
+            }
+        )
+
+        database.collection(req.query.stat).find({date: { $gte: new Date(startDate), $lt: new Date(endDate)}}).toArray().then(
             (items) => {
                 for (let i = 0; i < items.length; i++) {
                     if (items[i].data.name in playerMap) {
@@ -79,30 +69,7 @@ app.get('/', (req, res) => {
     }
 })
 
+
 app.listen(3001, function() {
-    console.log('server is running');
+    console.log('Server is running');
 })
-
-
-
-// // Create a MongoClient with a MongoClientOptions object to set the Stable API version
-// const client = new MongoClient(uri, {
-//   serverApi: {
-//     version: ServerApiVersion.v1,
-//     strict: true,
-//     deprecationErrors: true,
-//   }
-// });
-// async function run() {
-//   try {
-//     // Connect the client to the server	(optional starting in v4.7)
-//     await client.connect();
-//     // Send a ping to confirm a successful connection
-//     await client.db("admin").command({ ping: 1 });
-//     console.log("Pinged your deployment. You successfully connected to MongoDB!");
-//   } finally {
-//     // Ensures that the client will close when you finish/error
-//     await client.close();
-//   }
-// }
-// run().catch(console.dir);

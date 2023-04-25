@@ -7,17 +7,21 @@ const url = "http://localhost:3001";
 
 
 
-function Predictions() {
+function Predictions(props) {
   const [lines, setLines] = React.useState(null);
   const [isLoading, setLoading] = React.useState(true);
 
   React.useEffect(() => {
-    axios.get(url).then((response) => {
+    console.log("fetching data");
+    axios.get(url, {
+      params: {
+        stat: props.stat 
+      }
+    }).then((response) => {
       setLines(response.data);
       setLoading(false);
     });
-  }, []);
-  console.log(lines);
+  }, [props]);
 
   if (isLoading) {
     return <div>Loading...</div>;

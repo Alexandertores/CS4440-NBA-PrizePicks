@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 function Navbar() {
     return (
       <div className="App">
@@ -10,13 +12,13 @@ function Navbar() {
             <div class="collapse navbar-collapse" id="navbarNav">
               <ul class="navbar-nav">
                 <li class="nav-item">
-                  <a class="nav-link active" aria-current="page" href="#">Points</a>
+                  <Link class="nav-link active" aria-current="page" href="#" to="/">Points</Link>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="#">Rebounds</a>
+                    <Link class="nav-link" to="rebounds">Rebounds</Link>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="#">Assists</a>
+                    <Link class="nav-link" to="assists">Asssists</Link>
                 </li>
               </ul>
             </div>
