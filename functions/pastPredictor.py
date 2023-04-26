@@ -46,13 +46,14 @@ except Exception:
 
 # I think there are too many people and the api kicks me out so splitting them into a few groups
 firstperson = ['Jayson Tatum']
-people1 = ['Tyrese Haliburton', 'Jaylen Brown', 'Buddy Hield', 'Marcus Smart', 'Bennedict Mathurin', 'Myles Turner', 'Al Horford', 'Aaron Nesmith', 'Robert Williams III', 'Bojan Bogdanovic', 'Jaden Ivey', 'Cole Anthony', 'Franz Wagner', 'Paolo Banchero', 'Killian Hayes', 'Aaron Wiggins', 'Johnny Davis', 'Jordan Goodwin', 'Bryce McGowens', 'JT Thor', 'Svi Mykhailiuk']
+people1 = ['Tyrese Haliburton', 'Jaylen Brown', 'Buddy Hield', 'Marcus Smart', 'Bennedict Mathurin', 'Myles Turner', 'Al Horford', 'Aaron Nesmith', 'Robert Williams III', 'Bojan Bogdanovic', 'Jaden Ivey', 'Cole Anthony', 'Franz Wagner', 'Paolo Banchero', 'Killian Hayes', 'Aaron Wiggins', 'Jordan Goodwin', 'Bryce McGowens', 'JT Thor', 'Svi Mykhailiuk']
 people2 = ['Isaiah Stewart', 'Gary Harris', 'Jalen Duren', 'Wendell Carter Jr.', 'Markelle Fultz', 'Donovan Mitchell', 'Nikola Jokic', 'Darius Garland', 'Jamal Murray', 'Michael Porter Jr.', 'Caris LeVert', 'Evan Mobley', 'Kentavious Caldwell-Pope', 'Isaac Okoro', 'Jarrett Allen', 'Ja Morant']
 people3 = ['Joel Embiid', 'Jaren Jackson Jr.', 'James Harden', 'Desmond Bane', 'Tobias Harris', 'Dillon Brooks', 'Tyrese Maxey', 'Santi Aldama', "De'Anthony Melton", 'Brandon Ingram', 'CJ McCollum', 'Pascal Siakam', 'Fred VanVleet', 'Jonas Valanciunas', 'Scottie Barnes', 'Trey Murphy III', 'Herbert Jones', 'Josh Green', 'Keldon Johnson', 'Kyrie Irving', 'Luka Doncic']
 people4 = ['Zach Collins', 'Tim Hardaway Jr.', 'Malaki Branham', 'Jalen Williams', 'Lauri Markkanen', 'Josh Giddey', 'Jordan Clarkson', 'Shai Gilgeous-Alexander', 'Kelly Olynyk', 'Luguentz Dort', 'Walker Kessler', 'Isaiah Joe', 'Kenrich Williams', 'Talen Horton-Tucker', 'Draymond Green', 'LeBron James', 'Jordan Poole', 'Anthony Davis', 'Kevon Looney', 'Klay Thompson', "D'Angelo Russell", 'Malik Beasley', 'Jonathan Kuminga', 'Rui Hachimura', 'Donte DiVincenzo']
 people5 = [ 'Dennis Schroder', 'Ty Jerome', 'Austin Reaves', 'Jarred Vanderbilt', "De'Aaron Fox", 'Damian Lillard', 'Domantas Sabonis', 'Harrison Barnes', 'Jerami Grant', 'Keegan Murray', 'Kevin Huerter', 'Cam Reddish', 'Drew Eubanks', 'Malik Monk', 'Zach LaVine', 'Spencer Dinwiddie', 'DeMar DeRozan', 'Mikal Bridges', 'Nikola Vucevic', 'Brook Lopez', 'Jalen Green', 'Aaron Gordon', 'Matisse Thybulle', 'Tyler Herro', 'Caleb Martin', 'John Collins', 'Saddiq Bey', 'Victor Oladipo', 'Onyeka Okongwu', 'Max Strus', 'Bogdan Bogdanovic', 'Kristaps Porzingis', 'James Wiseman']
 people6 = ['Marvin Bagley III', 'Delon Wright', 'Isaiah Livers', 'Kelly Oubre Jr.', 'Kevin Porter Jr.', 'Stephen Curry', 'Reggie Bullock', 'Tyus Jones', 'Xavier Tillman', 'Kevin Love', 'Kevin Durant', 'Khris Middleton', 'Grayson Allen', 'Ivica Zubac', 'Terance Mann', 'P.J. Tucker', 'Monte Morris', 'Corey Kispert', 'Deni Avdija', 'Jusuf Nurkic', 'Devin Vassell', 'Troy Brown Jr.', 'Trey Lyles', 'Nick Richards', 'Rodney McGruder', 'Eugene Omoruyi', 'Lamar Stevens', 'Luke Kennard', 'Patrick Williams', 'Tre Jones', 'Keita Bates-Diop', 'Bruce Brown', 'Anfernee Simons', 'Josh Richardson', 'Andrew Nembhard', 'Dennis Smith Jr.', 'Ochai Agbaji']
 people7 = ['Sandro Mamukelashvili', 'Jaylin Williams', 'Bobby Portis', 'Joe Ingles', 'Bismack Biyombo', 'Ricky Rubio', "Royce O\'Neale", 'Pat Connaughton', 'Trendon Watford', 'Joe Harris', 'Jeff Green', 'Nicolas Batum', 'Shaedon Sharpe', 'Jordan Nwora', 'T.J. McConnell', 'Kris Dunn', 'Doug McDermott', 'Simone Fontecchio', 'Nassir Little', 'Karl-Anthony Towns', 'Larry Nance Jr.', 'Isaiah Hartenstein', 'Cameron Payne', 'Coby White', 'Skylar Mays']
+#'Johnny Davis', 
 
 
 # player_list = players.find_players_by_full_name("Jayson Tatum")
@@ -86,8 +87,8 @@ def run_points(people):
             for projection in projections:
                 date = projection[0].strftime("%b %d")
                 print(date)
-                # date February 24th accidentally has 2 values, so ignore it
-                if (date == "2 24" or date == "Feb 24" or (projection[0].strftime("%b") == "Apr")):
+
+                if (date == "2 24" or date == "Feb 24"):
                     continue
 
                 #Find the right date
@@ -153,7 +154,7 @@ def run_assists(people):
                 date = projection[0].strftime("%b %d")
                 print(date)
                 # date February 24th accidentally has 2 values, so ignore it
-                if (date == "2 24" or date == "Feb 24" or (projection[0].strftime("%b") == "Apr")):
+                if (date == "2 24" or date == "Feb 24" ):
                     continue
 
                 #Find the right date
@@ -219,7 +220,7 @@ def run_rebounds(people):
                 date = projection[0].strftime("%b %d")
                 print(date)
                 # date February 24th accidentally has 2 values, so ignore it
-                if (date == "2 24" or date == "Feb 24" or (projection[0].strftime("%b") == "Apr")):
+                if (date == "2 24" or date == "Feb 24"):
                     continue
 
                 #Find the right date
@@ -258,7 +259,7 @@ def run_rebounds(people):
     return rebounds
 
 
-rebounds_calculations = run_rebounds(people7)
+calculations = run_assists(people7)
 
 try:
     db = client.calculations
@@ -266,8 +267,15 @@ except Exception:
     print("oops something went wrong in the connection")
 
 
-collection = db.rebounds
-collection.insert_many(rebounds_calculations)
+collection = db.assists
+for calculation in calculations:
+    if calculation["date"].strftime("%b") != "Apr":
+        continue
+    if int(calculation["date"].strftime("%d"))>9:
+        continue
+    collection.insert_one(calculation)
+    print(calculation)
+# collection.insert_many(calculations)
 print("Successful")
     
 
