@@ -19,6 +19,9 @@ const calcDatabase = client.db(calcDb);
 var startDate = "2023-03-23";
 var endDate = "2023-03-24";
 
+const graphStartDate = "2023-03-01";
+const graphEndDate = "2023-03-28";
+
 playerMap = {};
 try {
     database.collection(playersCollection).find().toArray().then(
@@ -71,12 +74,41 @@ app.get('/', (req, res) => {
             (err) => {
                 return err
             }
-        ) 
+        )
     } catch (err) {
         console.error(`Something went wrong trying to find one document: ${err}\n`);
     }
 })
 
+app.get('/probabilities', (req, res) => {
+    try {
+        console.log(req.query)
+        calcDatabase.collection(req.query.stat).find({date: { $gte: new Date(req.query.startDate), $lt: new Date(req.query.endDate)}, "data.name": req.query.name}).toArray().then(
+            (items) => {
+                console.log(items);
+                dates = []
+                probabilities = []
+                graphData = []
+                // for (let i = 0; i < items.length; i++) {
+                //     // dates.push(items[i].date)
+                //     // probabilities.push(items[i].probability)
+                //     graphData.push({x: items[i].date, y: items[i].probability})
+                // }
+                // console.log(typeof(items))
+                dates = items?.map(a => a.date);
+                probabilities = items?.map(a => a.probability);
+                graphData = dates?.map((v, i) => [v, probabilities[i]]).map(([x, y]) => ({x, y}));
+                console.log(graphData);
+                res.send(graphData);
+            },
+            (err) => {
+                return err
+            }
+        )
+    } catch (err) {
+        console.error(`Something went wrong trying to find one document: ${err}\n`);
+    }
+})
 
 app.listen(3001, function() {
     console.log('Server is running');
