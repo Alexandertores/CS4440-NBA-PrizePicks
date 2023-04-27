@@ -74,8 +74,10 @@ app.get('/', (req, res) => {
 
 app.get('/probabilities', (req, res) => {
     try {
-        calcDatabase.collection(req.query.stat).find({date: { $gte: new Date(req.query.startDate), $lt: new Date(req.query.endDate)}, data: { name: req.query.name }}).toArray().then(
+        console.log(req.query)
+        calcDatabase.collection(req.query.stat).find({date: { $gte: new Date(req.query.startDate), $lt: new Date(req.query.endDate)}, "data.name": req.query.name}).toArray().then(
             (items) => {
+                console.log(items);
                 dates = []
                 probabilities = []
                 graphData = []
@@ -88,6 +90,7 @@ app.get('/probabilities', (req, res) => {
                 dates = items?.map(a => a.date);
                 probabilities = items?.map(a => a.probability);
                 graphData = dates?.map((v, i) => [v, probabilities[i]]).map(([x, y]) => ({x, y}));
+                console.log(graphData);
                 res.send(graphData);
             },
             (err) => {

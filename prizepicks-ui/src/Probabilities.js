@@ -20,15 +20,20 @@ function Probabilities(props) {
         endDate: props.endDate 
       }
     }).then((response) => {
+      console.log("DATA")
       console.log(response.data)
       setProbabilities(response.data);
       setLoading(false);
+      console.log(probabilities)
     });
-  }, [props]);
+  }, [probabilities, props]);
 
   if (isLoading) {
     return <div>Loading...</div>;
   }
+
+  
+
   return (
     <div><Graph data={probabilities}  /> </div>
   );
