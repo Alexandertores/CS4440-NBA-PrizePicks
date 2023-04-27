@@ -1,6 +1,8 @@
 import React, {useMemo, useRef, useState} from "react";
 import axios from "axios";
 import MaterialReactTable from 'material-react-table';
+import { Link } from "react-router-dom";
+
 
 const url = "http://localhost:3001";
 
@@ -64,6 +66,7 @@ function Predictions(props) {
     {
       accessorKey: 'data.name', //access nested data with dot notation
       header: 'Name',
+      Cell: ({cell}) => (<span><Link class="nav-link" to="http://localhost:3000/probabilities" state={{name:cell.getValue(), stat: props.stat}}>{cell.getValue()}</Link></span>)
     },
     {
       accessorKey: 'line',
