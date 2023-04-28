@@ -87,7 +87,7 @@ const handleEndDate = (event) => {
     return (
         <div>
             <Graph data={probabilities} label="Probability of hitting over" canvas_id={"probabilities"} />
-            <Graph data={over_unders} label="Over/under performance" canvas_id={"over_unders"} />
+            <Graph data={over_unders} label="Over/under performance" canvas_id={"over_unders"} overunder={true} />
             <input type="datetime-local" value={startDate} onChange={handleStartDate}></input>
             <input type="datetime-local" value={endDate} onChange={handleEndDate}></input>
             <div style = {{alignItems: "left"}}><p></p>On {date}, based on the last <input type = "number" defaultValue={5} onChange={handleChange} /> games, {state["name"]} has a probability of {probability} of hitting the over.</div>

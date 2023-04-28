@@ -18,22 +18,48 @@ function Graph(props) {
       var labels = []
       var points = []
       var input = JSON.parse(JSON.stringify(props.data))
+      var zero = []
       input.forEach(element => {
         labels.push(element.x);
         points.push(element.y);
-      });
-      const newChartInstance = new Chart(ctx, {
-        type: "line",
-        data: {
-          labels: labels,
-          datasets: [
-            {
-              data: points,
-              label: props.label || ''
-            }
-          ]
+        if (props.overunder) {
+          zero.push(0)
         }
+        
       });
+      var newChartInstance
+      if (props.overunder) {
+        newChartInstance = new Chart(ctx, {
+          type: "line",
+          data: {
+            labels: labels,
+            datasets: [
+              {
+                data: points,
+                label: props.label || ''
+              },
+              {
+                data: zero,
+                label: props.label || ''
+              }
+            ]
+          }
+        });
+      } else {
+        newChartInstance = new Chart(ctx, {
+          type: "line",
+          data: {
+            labels: labels,
+            datasets: [
+              {
+                data: points,
+                label: props.label || ''
+              }
+            ]
+          }
+        });
+      }
+      
       previousChartRef.current = newChartInstance;
       return () => {
         newChartInstance.destroy();
