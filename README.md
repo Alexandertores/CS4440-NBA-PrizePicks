@@ -1,7 +1,10 @@
-How to Insert Data into the MongoDB Manually
+How to run the react app  
+have npm installed  
+npm install nodemon in the main directory  
+might have to run npm i as well  
+run nodemon  
 
-- Put the data under temp-projections
-- Follow the same naming convention
-- in the prizepicks-parser.py, edit the file name around line 19 and edit the dates under the three if statements under the 
-  comment #For presaved projections.
-- Run.
+in a seperate terminal     
+cd prizepicks-ui  
+run npm i  
+then npm start  

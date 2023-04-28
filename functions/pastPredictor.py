@@ -20,7 +20,7 @@ def get_over_probability(player_stats: np.ndarray, projections: np.ndarray):
 
 def get_over_probability2(differences: np.ndarray):
     z_score = (np.mean(differences)) / np.std(differences)
-    return st.norm.cdf(z_score)
+    return 1- st.norm.cdf(z_score)
 
 
 

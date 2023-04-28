@@ -14,7 +14,7 @@ def get_over_probability(player_stats: np.ndarray, projections: np.ndarray):
     differences = player_stats - projections
     print(differences)
     z_score = (0 - np.mean(differences)) / np.std(differences)
-    return st.norm.cdf(z_score)
+    return 1- st.norm.cdf(z_score)
 
 # Connection to MongoDB
 conn_str = "mongodb+srv://vincent:nbaprizepicks@cs4440.s5kkhzs.mongodb.net/test"
