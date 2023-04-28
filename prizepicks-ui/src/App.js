@@ -2,6 +2,8 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
 import './App.css';
 import Navbar from './Navbar';
 import Predictions from './Predictions';
+import PlayerInterface from "./PlayerInterface";
+import React from "react";
 
 function App() {
   return (
@@ -12,6 +14,7 @@ function App() {
           <Route path="/" element={ <Predictions stat="points"/> } />
           <Route path="/rebounds" element={ <Predictions stat="rebounds"/> } />
           <Route path="/assists" element={ <Predictions stat="assists"/> } />
+          <Route path="/probabilities" element={ <PlayerInterface stat="points" name="Buddy Hield"/> } />
         </Routes>
       </Router>
     </div>
