@@ -8,7 +8,7 @@ import pprint
 # response = requests.get(
 #   url='https://proxy.scrapeops.io/v1/',
 #   params={
-#       'api_key': '762bb554-8720-4a69-963c-e0b91b9fe07e',
+#       'api_key': '',
 #       'url': 'https://api.prizepicks.com/projections', 
 #   },
 # )
