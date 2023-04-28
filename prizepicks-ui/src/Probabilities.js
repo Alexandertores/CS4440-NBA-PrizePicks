@@ -41,23 +41,23 @@ function Probabilities(props) {
   }, [isLoading, probabilities, props, state, state.name]);
 
   const handleChange = (e) => {
-    console.log(e.target.value);
+    if (parseInt(e.target.value) > 2) {
+      console.log("games"+e.target.value);
 
-    // axios.get(url+"probability", {
-    //   params: {
-    //     stat: state["stat"],
-    //     name: state["name"],
-    //     date: date, 
-    //     games: e.target.value
-    //   }
-    // }).then((response) => {
-    //   console.log("DATA")
-    //   console.log(response.data)
-    //   setProbability(response.data);
-    // });
-
-
-    // //setDate(e.target.value);
+    axios.get(url+"probability", {
+      params: {
+        stat: state["stat"],
+        name: state["name"],
+        date: date, 
+        games: e.target.value
+      }
+    }).then((response) => {
+      console.log("DATA")
+      console.log(response.data)
+      setProbability(response.data);
+    });
+    }
+    //setDate(e.target.value);
   };
 
   if (isLoading) {
