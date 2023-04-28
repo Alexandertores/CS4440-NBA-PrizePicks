@@ -66,7 +66,7 @@ function Predictions(props) {
     {
       accessorKey: 'data.name', //access nested data with dot notation
       header: 'Name',
-      Cell: ({cell}) => (<span><Link class="nav-link" to="http://localhost:3000/probabilities" state={{name:cell.getValue(), stat: props.stat}}>{cell.getValue()}</Link></span>)
+      Cell: ({cell}) => (<span><Link class="nav-link" to="http://localhost:3000/probabilities" state={{name:cell.getValue(), stat: props.stat, date: date, probability:cell.row.original.probability}}>{cell.getValue()}</Link></span>)
     },
     {
       accessorKey: 'line',

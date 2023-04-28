@@ -4,13 +4,16 @@ import Graph from "./Graph";
 import { useLocation } from 'react-router-dom';
 
 
-const url = "http://localhost:3001/probabilities";
+const url = "http://localhost:3001/";
 
 
 function Probabilities(props) {
   const [probabilities, setProbabilities] = React.useState(null);
   const [isLoading, setLoading] = React.useState(true);
   let { state } = useLocation();
+  const date = state['date']
+  const [probability, setProbability] = React.useState(state['probability'])
+
   console.log("state1" + JSON.stringify(state));
  
 
@@ -19,7 +22,7 @@ function Probabilities(props) {
     if (isLoading === true) {
       console.log("fetching data");
   
-      axios.get(url, {
+      axios.get(url+"probabilities", {
         params: {
           stat: state["stat"],
           name: state["name"],
@@ -37,6 +40,26 @@ function Probabilities(props) {
     
   }, [isLoading, probabilities, props, state, state.name]);
 
+  const handleChange = (e) => {
+    console.log(e.target.value);
+
+    // axios.get(url+"probability", {
+    //   params: {
+    //     stat: state["stat"],
+    //     name: state["name"],
+    //     date: date, 
+    //     games: e.target.value
+    //   }
+    // }).then((response) => {
+    //   console.log("DATA")
+    //   console.log(response.data)
+    //   setProbability(response.data);
+    // });
+
+
+    // //setDate(e.target.value);
+  };
+
   if (isLoading) {
     return <div>Loading...</div>;
   }
@@ -45,7 +68,8 @@ function Probabilities(props) {
 
   return (
     <><div style = {{maxWidth: "70%"}}><Graph data={probabilities} /> </div>
-    <div><p></p><input type = "number" defaultValue={5}/></div></>
+
+    <div style = {{alignItems: "left"}}><p></p>On {date}, based on the last <input type = "number" defaultValue={5} onChange={handleChange} /> games, {state["name"]} has a probability of {probability} of hitting the over.</div></>
   );
 }
   

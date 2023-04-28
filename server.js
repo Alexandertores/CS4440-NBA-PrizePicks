@@ -110,6 +110,50 @@ app.get('/probabilities', (req, res) => {
     }
 })
 
+// function compareDates(a,b) {
+//     return new Date(a.y) - new Date(b.y)
+// }
+// const average = array => array.reduce((a, b) => a + b) / array.length;
+// function getStandardDeviation (array) {
+//     const n = array.length
+//     const mean = array.reduce((a, b) => a + b) / n
+//     return Math.sqrt(array.map(x => Math.pow(x - mean, 2)).reduce((a, b) => a + b) / n)
+//   }
+
+// app.get('/probability', (req, res) => {
+//     try {
+//         console.log(req.query)
+//         calcDatabase.collection(req.query.stat).find({date: { $gte: new Date(req.query.date), $lt: new Date((new Date(req.query.date)).valueOf() + 1000*3600*24)}, "data.name": String(req.query.name)}).toArray().then(
+//             (items) => {
+//                 // console.log(items);
+//                 dates = []
+//                 probabilities = []
+//                 graphData = []
+//                 // for (let i = 0; i < items.length; i++) {
+//                 //     // dates.push(items[i].date)
+//                 //     // probabilities.push(items[i].probability)
+//                 //     graphData.push({x: items[i].date, y: items[i].probability})
+//                 // }
+//                 // console.log(typeof(items))
+//                 dates = items?.map(a => a.date);
+//                 overUnders = items?.map(a => a.data.overUnder);
+//                 graphData = dates?.map((v, i) => [v, overUnders[i]]).map(([x, y]) => ({x, y}));
+//                 graphData.sort(compareDates);
+//                 days = graphData[0,req.query.games]
+//                 days.forEach(element => element = element.y)
+//                 mean = average(days)
+//                 std = getStandardDeviation(days)
+//                 res.send(graphData);
+//             },
+//             (err) => {
+//                 return err
+//             }
+//         )
+//     } catch (err) {
+//         console.error(`Something went wrong trying to find one document: ${err}\n`);
+//     }
+// })
+
 app.listen(3001, function() {
     console.log('Server is running');
 })
