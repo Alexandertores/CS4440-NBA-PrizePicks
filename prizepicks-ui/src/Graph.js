@@ -1,35 +1,47 @@
-import React from 'react';
-import { Line } from 'react-chartjs-2';
-import Chart from 'chart.js/auto';
-
-
-
+import React, { useRef, useEffect } from 'react';
+import { Chart } from 'chart.js/auto';
 
 
 function Graph(props) {
 
-    var labels = []
-    var points = []
-    var input = JSON.parse(JSON.stringify(props.data))
-    input.forEach(element => {
+  const chartRef = useRef(null);
+  const previousChartRef = useRef(null);
+
+  console.log("PROPS1" + JSON.stringify(props.data))
+  useEffect(() => {
+    if (props.data) {
+      if (previousChartRef.current) {
+        previousChartRef.current.destroy();
+      }
+      const ctx = chartRef.current.getContext("2d");
+
+      var labels = []
+      var points = []
+      var input = JSON.parse(JSON.stringify(props.data))
+      input.forEach(element => {
         labels.push(element.x);
         points.push(element.y);
-    });
-    const data = {
-        labels: labels,
-        datasets: [
-          {
-            data: points,
-          }
-        ]
+      });
+      const newChartInstance = new Chart(ctx, {
+        type: "line",
+        data: {
+          labels: labels,
+          datasets: [
+            {
+              data: points,
+              label: props.label || ''
+            }
+          ]
+        }
+      });
+      previousChartRef.current = newChartInstance;
+      return () => {
+        newChartInstance.destroy();
       };
-
-
-    console.log("PROPS1" + JSON.stringify(props.data))
-    if (props.data != null) {
-        return <Line data={data}></Line>
     }
-    
+  }, [props.data, props.canvas_id]);
+
+  return <canvas id={props.canvas_id} ref={chartRef}/>
 }
   
 export default Graph;
